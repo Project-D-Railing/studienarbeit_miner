@@ -227,7 +227,7 @@ class bahnapi {
         if (!array_key_exists(0, $fahrten["s"])) {
             // nur ein zug mappe diesen um, um den weiteren prozess zu vereinheitlichen
             $temp = $fahrten["s"];
-            $fahrten["s"] = "";
+            $fahrten["s"] = array();
             $fahrten["s"][] = $temp;
             // TODO remove debug output after verified
             //var_dump($fahrten["s"]);
