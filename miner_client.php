@@ -9,8 +9,15 @@ require_once 'classes/MysqliDb.php';
  *  - MYSQL credentials to fetch work and submit results
  */
 
+if(isset($_REQUEST['$workerid'])) {
+    $workerid = $_REQUEST['$workerid'];
+} else {
+    $workerid = 1;
+}
 
-$apikeys = SETTING_APIKEYS;
+
+
+$apikeys = SETTING_APIKEYS[$workerid];
 
 /**
  * 4 = 1 * 8
