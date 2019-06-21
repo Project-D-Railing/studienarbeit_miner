@@ -69,7 +69,7 @@ foreach ($stationen as $key => $station) {
     // set fetchstatus back to normal
     $evanr = $station['nr'];
     $mysqlislave->query("UPDATE haltestellen2 SET fetchstatus = 1 WHERE EVA_NR = '$evanr'");
-    $totaltime = round(((microtime(true) - $starttime) / 1000), 2);
+    $totaltime = round(((microtime(true) - $starttime)), 2);
     $errordata = array("log" => "Done in $totaltime seconds", "evanr" => $evanr);
     $db->insert("errorlog2", $errordata);
     usleep(500000);
