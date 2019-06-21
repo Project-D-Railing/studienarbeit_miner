@@ -48,6 +48,7 @@ if ($mysqlislave->query("START TRANSACTION;") === false) {
 
 $stationsquery = $mysqlislave->query("SELECT EVA_NR as nr, NAME, fetchtime FROM haltestellen2 WHERE fetchactive2=1 AND fetchstatus = 1 AND fetchtime < (NOW() - INTERVAL 60 MINUTE) ORDER BY fetchtime ASC LIMIT 0,$fetchcount FOR UPDATE ");
 $stationen = array();
+
 while ($row = $stationsquery->fetch_assoc()) {
     $evanr = $row['nr'];
     $stationen[] = array('nr' => $row['nr'], 'name' => $row["NAME"]);
@@ -59,7 +60,8 @@ if ($mysqlislave->query("COMMIT;") === false) {
 }
 
 $timestamp = time();
-$errordata = array("log" => "Start fetching $fetchcount stations from $currenthost with $workerid my current time is $timestamp", "evanr" => 100);
+$realcount = count($stationen);
+$errordata = array("log" => "Start fetching $realcount stations from $currenthost with $workerid my current time is $timestamp", "evanr" => 100);
 $db->insert("errorlog2", $errordata);
 
 //$bahnapi->addToErrorLog("Anz. Fetch: " . count($stationen));
