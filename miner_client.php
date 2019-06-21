@@ -84,6 +84,6 @@ foreach ($stationen as $key => $station) {
     usleep(500000);
 }
 
-$errordata = array("log" => "Finished fetching $fetchcount stations from $currenthost with $workerid", "evanr" => 100);
+$errordata = array("log" => "Finished fetching $realcount stations from $currenthost with $workerid", "evanr" => 100);
 $db->insert("errorlog2", $errordata);
 
