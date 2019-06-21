@@ -59,7 +59,7 @@ if ($mysqlislave->query("COMMIT;") === false) {
 }
 
 $timestamp = time();
-$errordata = array("log" => "Start fetching $fetchcount stations from $currenthost with $filepath my current time is $timestamp", "evanr" => 100);
+$errordata = array("log" => "Start fetching $fetchcount stations from $currenthost with $workerid my current time is $timestamp", "evanr" => 100);
 $db->insert("errorlog2", $errordata);
 
 //$bahnapi->addToErrorLog("Anz. Fetch: " . count($stationen));
@@ -77,11 +77,11 @@ foreach ($stationen as $key => $station) {
     $evanr = $station['nr'];
     $mysqlislave->query("UPDATE haltestellen2 SET fetchstatus = 1 WHERE EVA_NR = '$evanr'");
     $totaltime = round(((microtime(true) - $starttime)), 2);
-    $errordata = array("log" => "Done in $totaltime seconds $currenthost", "evanr" => $evanr);
+    $errordata = array("log" => "Done in $totaltime seconds $currenthost workerid $workerid", "evanr" => $evanr);
     $db->insert("errorlog2", $errordata);
     usleep(500000);
 }
 
-$errordata = array("log" => "Finished fetching $fetchcount stations from $currenthost with $filepath", "evanr" => 100);
+$errordata = array("log" => "Finished fetching $fetchcount stations from $currenthost with $workerid", "evanr" => 100);
 $db->insert("errorlog2", $errordata);
 
