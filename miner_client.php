@@ -40,6 +40,12 @@ $bahnapi = new bahnapi($apikeys);
 $mysqlislave = new mysqli(SETTING_DB_IP, SETTING_DB_USER, SETTING_DB_PASSWORD, SETTING_DB_NAME);
 $db = new MysqliDb(SETTING_DB_IP, SETTING_DB_USER, SETTING_DB_PASSWORD, SETTING_DB_NAME);
 
+if($workerid == 1 && $minute == 59) {
+    // force reset haltestellen fetchstatus
+    $mysqlislave->query("UPDATE haltestellen2 SET fetchstatus = 1");
+} else {
+    usleep(2000000);
+}
 
 if ($mysqlislave->query("START TRANSACTION;") === false) {
     die("Could not start transaction.");
