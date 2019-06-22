@@ -56,6 +56,12 @@ while ($row = $stationsquery->fetch_assoc()) {
 }
 
 if ($mysqlislave->query("COMMIT;") === false) {
+    $mysqlierror = $mysqlislave->error;
+    $errordata = array("log" => "Error commiting result: $mysqlierror", "evanr" => 100);
+    $db->insert("errorlog2", $errordata);
+
+    $mysqlislave->query("ROLLBACK;");
+
     die("Could not commit transaction.");
 }
 
@@ -77,11 +83,16 @@ foreach ($stationen as $key => $station) {
 
     // set fetchstatus back to normal
     $evanr = $station['nr'];
-    $mysqlislave->query("UPDATE haltestellen2 SET fetchstatus = 1 WHERE EVA_NR = '$evanr'");
+    $resetresult = $mysqlislave->query("UPDATE haltestellen2 SET fetchstatus = 1 WHERE EVA_NR = '$evanr'");
+    if($resetresult === false) {
+        $mysqlierror = $mysqlislave->error;
+        $errordata = array("log" => "Error resetting station $evanr workerid $workerid with error: $mysqlierror", "evanr" => 100);
+        $db->insert("errorlog2", $errordata);
+    }
     $totaltime = round(((microtime(true) - $starttime)), 2);
     $errordata = array("log" => "Done in $totaltime seconds $currenthost workerid $workerid", "evanr" => $evanr);
     $db->insert("errorlog2", $errordata);
-    usleep(500000);
+    usleep(mt_rand(200000, 1500000));
 }
 
 $errordata = array("log" => "Finished fetching $realcount stations from $currenthost with $workerid", "evanr" => 100);
