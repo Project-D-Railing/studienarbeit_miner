@@ -561,7 +561,7 @@ class bahnapi {
             }
         }
 
-        var_dump($haltestellenname);
+//        var_dump($haltestellenname);
 //        $tmpname = explode(",", $haltestellenname);
 //        $haltestellennamefirstpart = $tmpname[0];
 //        $tmpname2 = explode("ß", $haltestellennamefirstpart);
@@ -576,12 +576,17 @@ class bahnapi {
         }
         $encodedName = implode(" ", $encparts);
 //        $encodedName = urlencode($haltestellenname);
-        var_dump($encodedName);
+        echo "Sending request for: ".$encodedName. "<br>";
         // generate request fahrten
         $requestFahrten = 'station/' . $encodedName;
         $station = $this->bahnCurl($requestFahrten, "timetables");
 
-        var_dump($station);
+        if($station == false) {
+            echo "Got error for: ".$encodedName. "<br>";
+            return false;
+        }
+
+//        var_dump($station);
         // result
         // array(1) { ["station"]=> array(1) { ["@attributes"]=> array(5) { ["name"]=> string(15) "Mosonmagyarovar" ["eva"]=> string(7) "5500016" ["ds100"]=> string(4) "XMMO" ["db"]=> string(4) "true" ["creationts"]=> string(21) "19-06-09 02:14:17.145" } } }
         if (is_array($station)) {
