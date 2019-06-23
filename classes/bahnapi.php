@@ -149,6 +149,13 @@ class bahnapi {
             }
             return FALSE;
         }
+
+        if (strpos($request, 'station') !== false) {
+            if ($http_code !== 200) {
+                return FALSE;
+            }
+        }
+
         // Filter out random 400 and count up error for this station
         if ($http_code == 400) {
             // API quota warning
