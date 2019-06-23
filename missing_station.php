@@ -45,7 +45,7 @@ while ($row = $stationsquery->fetch_assoc()) {
 $current_state = $mysqlislave->query("SELECT row_id FROM current_state where id = 1");
 $row = $current_state->fetch_assoc();
 $row_id = $row['row_id'];
-$limit = 1000;
+$limit = 5000;
 $totalqueries = 0;
 $streckenquery = $mysqlislave->query("SELECT * FROM strecken2 WHERE id >= $row_id ORDER BY id ASC LIMIT $limit");
 
