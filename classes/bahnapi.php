@@ -1,6 +1,6 @@
 <?php
 
-include_once '../settings.php';
+include_once __DIR__ . '/../settings.php';
 require_once 'MysqliDb.php';
 
 class bahnapi {
@@ -54,6 +54,9 @@ class bahnapi {
      */
     public function getNextAPIKey($api) {
         // only add if not already limited
+        if(!is_array($this->apikeyslimited[$api])) {
+            $this->apikeyslimited[$api] = array();
+        }
         if (!in_array($this->apikeycurrent, $this->apikeyslimited[$api])) {
             $this->apikeyslimited[$api][] = $this->apikeycurrent;
         }
