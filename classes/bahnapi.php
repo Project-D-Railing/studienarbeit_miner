@@ -548,14 +548,15 @@ class bahnapi {
         if (is_array($station)) {
             if (isset($station["station"])) {
                 $rawstation = $station["station"];
-                var_dump($rawstation);
+//                var_dump($rawstation);
                 if (isset($rawstation["@attributes"])) {
                     $stationdata = $rawstation["@attributes"];
+                    var_dump($stationdata);
                     if(isset($stationdata["name"])) {
                         if(isset($stationdata["eva"])) {
                             if(isset($stationdata["ds100"])) {
                                 // nice if pyramid completed :D
-                                var_dump($stationdata);
+//                                var_dump($stationdata);
                             }
                         }
                     }
