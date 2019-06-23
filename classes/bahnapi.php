@@ -556,26 +556,20 @@ class bahnapi {
                         if(isset($stationdata["eva"])) {
                             if(isset($stationdata["ds100"])) {
                                 // nice if pyramid completed :D
-                                $evanr = $stationdata['evanr'];
-                                $ds100 = $stationdata['ds100'];
-                                $name = $stationdata['name'];
-                                var_dump($name);
-                                var_dump($evanr);
+                                $haltestellendaten = Array("NAME" => $stationdata['name'],
+                                    "EVA_NR" => (int) $stationdata['eva'],
+                                    "DS100 " => $stationdata['ds100'],
+                                    "fetchstatus2" => 0,
+                                    "manualadded" => 1,
+                                    "country_code" => ""
+                                );
+                                $resulthaltestelleninsert = $this->database->insert("haltestellen2", $haltestellendaten);
                             }
                         }
                     }
                 }
             }
         }
-
-
-//        $evanr = $stationdata['evanr'];
-//        $ds100 = $stationdata['ds100'];
-//        $name = $stationdata['name'];
-//        var_dump($stationdata);
-//            $mysqlislave->query("INSERT INTO haltestellen2 (EVA_NR, DS100, NAME, fetchactive2, manualadded) VALUE ($evanr,$ds100, $name, 0, 1)");
-//        var_dump($station);
-
     }
 
 }
