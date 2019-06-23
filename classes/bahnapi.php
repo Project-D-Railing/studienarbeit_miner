@@ -547,7 +547,7 @@ class bahnapi {
     public function getStationData($haltestellenname) {
         $namewithoutsomechars = $haltestellenname;
 
-        $invalidchars = array(",", "ß", "(", "/", "ß");
+        $invalidchars = array(",", "ß", "(", "/", "ß", "�");
 
         while (true) {
             $tmpnameloop = $namewithoutsomechars;
