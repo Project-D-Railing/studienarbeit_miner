@@ -72,6 +72,7 @@ while ($row = $streckenquery->fetch_assoc()) {
             $totalqueries++;
 
             $stationen[] = $haltestelle;
+            usleep(mt_rand(200000, 1500000));
         }
     }
     $mysqlislave->query("UPDATE current_state SET row_id = '$haltestellenid' where id = 1");
