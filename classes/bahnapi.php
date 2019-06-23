@@ -542,11 +542,13 @@ class bahnapi {
         $requestFahrten = 'station/' . $encodedName;
         $station = $this->bahnCurl($requestFahrten, "timetables");
 
+        var_dump($station);
         // result
         // array(1) { ["station"]=> array(1) { ["@attributes"]=> array(5) { ["name"]=> string(15) "Mosonmagyarovar" ["eva"]=> string(7) "5500016" ["ds100"]=> string(4) "XMMO" ["db"]=> string(4) "true" ["creationts"]=> string(21) "19-06-09 02:14:17.145" } } }
         if (is_array($station)) {
             if (isset($station["station"])) {
                 $rawstation = $station["station"];
+                var_dump($rawstation);
                 if (isset($rawstation["@attributes"])) {
                     $stationdata = $rawstation["@attributes"];
                     if(isset($stationdata["name"])) {
