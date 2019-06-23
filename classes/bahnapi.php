@@ -536,4 +536,14 @@ class bahnapi {
         $this->database->insert("errorlog2", $errordata);
     }
 
+    public function getStationData($haltestellenname) {
+        $encodedName = urlencode($haltestellenname);
+        // generate request fahrten
+        $requestFahrten = 'station/' . $encodedName;
+        $station = $this->bahnCurl($requestFahrten, "timetables");
+
+//        var_dump($station);
+        return $station;
+    }
+
 }
