@@ -152,6 +152,7 @@ class bahnapi {
 
         if (strpos($request, 'station') !== false) {
             if ($http_code !== 200) {
+                echo "wrong http code $http_code for station missing";
                 return FALSE;
             }
         }
