@@ -45,20 +45,26 @@ while ($row = $stationsquery->fetch_assoc()) {
 $current_state = $mysqlislave->query("SELECT row_id FROM current_state where id = 1");
 $row = $current_state->fetch_assoc();
 $row_id = $row['row_id'];
-$limit = 20;
-
+$limit = 1000;
+$totalqueries = 0;
 $streckenquery = $mysqlislave->query("SELECT * FROM strecken2 ORDER BY ID ASC LIMIT $row_id, $limit");
 
 while ($row = $streckenquery->fetch_assoc()) {
     $haltestellen = array();
     //var_dump($row['haltestellen']);
     $haltestellenstring = $row['haltestellen'];
+    $haltestellenid = $row['id'];
     $haltestellen = explode("|", $haltestellenstring);
     foreach ($haltestellen as $haltestelle) {
         //var_dump($haltestelle);
         if (!in_array($haltestelle, $stationen)) {
+            if($totalqueries >= $fetchcount) {
+                // skip fetch if we already use all of our apikeys
+                continue 2;
+            }
             echo "Missing $haltestelle <br>";
             $stationdata = $bahnapi->getStationData($haltestelle);
+            $totalqueries++;
             $evanr = $stationdata['evanr'];
             $ds100 = $stationdata['ds100'];
             $name = $stationdata['name'];
@@ -68,6 +74,7 @@ while ($row = $streckenquery->fetch_assoc()) {
             $stationen[] = $haltestelle;
         }
     }
+    $mysqlislave->query("UPDATE current_state SET row_id = '$haltestellenid' where id = 1");
 }
-$row_id_new = $row_id + $limit;
-//$mysqlislave->query("UPDATE current_state SET row_id = '$row_id_new' where id = 1");
+
+echo "Done";
