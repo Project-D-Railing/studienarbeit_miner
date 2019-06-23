@@ -63,7 +63,12 @@ while ($row = $streckenquery->fetch_assoc()) {
                 continue 2;
             }
             echo "Missing $haltestelle <br>";
-            $bahnapi->getStationData($haltestelle);
+            $result = $bahnapi->getStationData($haltestelle);
+            if($result == true) {
+                echo "Found Missing $haltestelle and added to table <br>";
+            } else {
+                echo "Didn't find missing $haltestelle was not added to table<br>";
+            }
             $totalqueries++;
 
             $stationen[] = $haltestelle;

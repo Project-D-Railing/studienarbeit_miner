@@ -562,24 +562,26 @@ class bahnapi {
                 if (isset($rawstation["@attributes"])) {
                     $stationdata = $rawstation["@attributes"];
 //                    var_dump($stationdata);
-                    if(isset($stationdata["name"])) {
-                        if(isset($stationdata["eva"])) {
-                            if(isset($stationdata["ds100"])) {
+                    if (isset($stationdata["name"])) {
+                        if (isset($stationdata["eva"])) {
+                            if (isset($stationdata["ds100"])) {
                                 // nice if pyramid completed :D
                                 $haltestellendaten = Array("NAME" => $stationdata['name'],
-                                    "EVA_NR" => (int) $stationdata['eva'],
+                                    "EVA_NR" => (int)$stationdata['eva'],
                                     "DS100" => $stationdata['ds100'],
                                     "fetchactive2" => 0,
                                     "manualadded" => 1,
                                     "country_code" => ""
                                 );
                                 $resulthaltestelleninsert = $this->database->insert("haltestellen2", $haltestellendaten);
+                                return true;
                             }
                         }
                     }
                 }
             }
         }
+        return false;
     }
 
 }
