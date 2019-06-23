@@ -609,7 +609,7 @@ class bahnapi {
                                 $haltestellendaten = Array("NAME" => $stationdata['name'],
                                     "EVA_NR" => (int)$stationdata['eva'],
                                     "DS100" => $stationdata['ds100'],
-                                    "fetchactive2" => 0,
+                                    "fetchactive2" => 1,
                                     "manualadded" => 1,
                                     "country_code" => ""
                                 );

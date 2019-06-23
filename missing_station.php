@@ -78,5 +78,19 @@ while ($row = $streckenquery->fetch_assoc()) {
     }
     $mysqlislave->query("UPDATE current_state SET row_id = '$haltestellenid' where id = 1");
 }
+$mysqlislave->query('update `haltestellen2` set country_code="CZ" where EVA_NR like "54%" and EVA_NR > 1000000;');
+$mysqlislave->query('update `haltestellen2` set country_code="PL" where EVA_NR like "51%" and EVA_NR > 1000000;');
+$mysqlislave->query('update `haltestellen2` set country_code="HU" where EVA_NR like "55%" and EVA_NR > 1000000;');
+$mysqlislave->query('update `haltestellen2` set country_code="SK" where EVA_NR like "56%" and EVA_NR > 1000000;');
+$mysqlislave->query('update `haltestellen2` set country_code="DE" where EVA_NR like "80%" and EVA_NR > 1000000;');
+$mysqlislave->query('update `haltestellen2` set country_code="AT" where EVA_NR like "81%" and EVA_NR > 1000000;');
+$mysqlislave->query('update `haltestellen2` set country_code="LU" where EVA_NR like "82%" and EVA_NR > 1000000;');
+$mysqlislave->query('update `haltestellen2` set country_code="IT" where EVA_NR like "83%" and EVA_NR > 1000000;');
+$mysqlislave->query('update `haltestellen2` set country_code="NL" where EVA_NR like "84%" and EVA_NR > 1000000;');
+$mysqlislave->query('update `haltestellen2` set country_code="CH" where EVA_NR like "85%" and EVA_NR > 1000000;');
+$mysqlislave->query('update `haltestellen2` set country_code="DK" where EVA_NR like "86%" and EVA_NR > 1000000;');
+$mysqlislave->query('update `haltestellen2` set country_code="FR" where EVA_NR like "87%" and EVA_NR > 1000000;');
+$mysqlislave->query('update `haltestellen2` set country_code="BE" where EVA_NR like "88%" and EVA_NR > 1000000;');
+
 
 echo "Done";
