@@ -24,6 +24,8 @@ $apikeys = SETTING_APIKEYS[$workerid];
 $fetchcount = (int)(floor(count($apikeys) / 2) - 1) * 18;
 // client time is only used to select keys so no problem with different timezones
 $minute = date("i", time());
+$hours = date("G", time());
+
 if ($minute % 2 == 0) {
     $apikeys = array_reverse($apikeys);
 }
@@ -41,6 +43,12 @@ while ($row = $stationsquery->fetch_assoc()) {
     $stationen[] = $row["NAME"];
 }
 //var_dump($stationen);
+
+//reset state every day at 2 15
+if($minute == 15 && $hours == 2) {
+    $mysqlislave->query("UPDATE current_state SET row_id = '1' where id = 1");
+}
+
 
 $current_state = $mysqlislave->query("SELECT row_id FROM current_state where id = 1");
 $row = $current_state->fetch_assoc();
