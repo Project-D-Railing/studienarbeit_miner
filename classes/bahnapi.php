@@ -21,7 +21,7 @@ class bahnapi {
 
     /**
      * constructor of bahnapi
-     * @param arry $apikeys like ("key1","key2",....)
+     * @param array $apikeys like ("key1","key2",....)
      * @return boolean false if error with apikey detected
      */
     public function __construct($apikeys) {
@@ -546,6 +546,7 @@ class bahnapi {
 
     public function getStationData($haltestellenname) {
         $encodedName = urlencode($haltestellenname);
+        var_dump($encodedName);
         // generate request fahrten
         $requestFahrten = 'station/' . $encodedName;
         $station = $this->bahnCurl($requestFahrten, "timetables");
