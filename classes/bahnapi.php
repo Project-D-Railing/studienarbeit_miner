@@ -48,7 +48,7 @@ class bahnapi {
     }
 
     /**
-     * 
+     *
      * @param string $api current used api ex.  "fahrplan-plus"
      * @return boolean false or string apikey
      */
@@ -93,7 +93,7 @@ class bahnapi {
     }
 
     /**
-     * 
+     *
      * @param type $request
      * @param type $api
      * @return boolean
@@ -388,7 +388,7 @@ class bahnapi {
                 $resultstrecken = $this->database->insert("strecken2", $streckendata);
 //                echo 'new strecken inserted';
             } catch (Exception $ex) {
-                
+
             }
         }
         $keyszuege = array("zugid", "zugverkehrstyp", "zugtyp", "zugowner", "zugklasse", "zugnummer", "zugnummerfull", "linie", "evanr", "arzeitsoll", "arzeitist", "dpzeitsoll", "dpzeitist", "gleissoll", "gleisist", "datum", "streckengeplanthash", "streckenchangedhash", "zugstatus");
@@ -531,7 +531,7 @@ class bahnapi {
         return date_timestamp_get($date);
     }
 
-    public function logErrorToErrorlog($errorstring, $evanr = 100)  {
+    public function logErrorToErrorlog($errorstring, $evanr = 100) {
         $errordata = array("log" => $errorstring, "evanr" => $evanr);
         $this->database->insert("errorlog2", $errordata);
     }
@@ -542,8 +542,33 @@ class bahnapi {
         $requestFahrten = 'station/' . $encodedName;
         $station = $this->bahnCurl($requestFahrten, "timetables");
 
+        // result
+        // array(1) { ["station"]=> array(1) { ["@attributes"]=> array(5) { ["name"]=> string(15) "Mosonmagyarovar" ["eva"]=> string(7) "5500016" ["ds100"]=> string(4) "XMMO" ["db"]=> string(4) "true" ["creationts"]=> string(21) "19-06-09 02:14:17.145" } } }
+        if (is_array($station)) {
+            if (isset($station["station"])) {
+                $rawstation = $station["station"];
+                if (isset($rawstation["@attributes"])) {
+                    $stationdata = $rawstation["@attributes"];
+                    if(isset($stationdata["name"])) {
+                        if(isset($stationdata["eva"])) {
+                            if(isset($stationdata["ds100"])) {
+                                // nice if pyramid completed :D
+                                var_dump($stationdata);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+//        $evanr = $stationdata['evanr'];
+//        $ds100 = $stationdata['ds100'];
+//        $name = $stationdata['name'];
+//        var_dump($stationdata);
+//            $mysqlislave->query("INSERT INTO haltestellen2 (EVA_NR, DS100, NAME, fetchactive2, manualadded) VALUE ($evanr,$ds100, $name, 0, 1)");
 //        var_dump($station);
-        return $station;
+
     }
 
 }

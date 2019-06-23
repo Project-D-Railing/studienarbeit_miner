@@ -63,13 +63,8 @@ while ($row = $streckenquery->fetch_assoc()) {
                 continue 2;
             }
             echo "Missing $haltestelle <br>";
-            $stationdata = $bahnapi->getStationData($haltestelle);
+            $bahnapi->getStationData($haltestelle);
             $totalqueries++;
-            $evanr = $stationdata['evanr'];
-            $ds100 = $stationdata['ds100'];
-            $name = $stationdata['name'];
-            var_dump($stationdata);
-//            $mysqlislave->query("INSERT INTO haltestellen2 (EVA_NR, DS100, NAME, fetchactive2, manualadded) VALUE ($evanr,$ds100, $name, 0, 1)");
 
             $stationen[] = $haltestelle;
         }
