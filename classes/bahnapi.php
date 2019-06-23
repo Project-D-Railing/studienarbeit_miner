@@ -556,7 +556,11 @@ class bahnapi {
                         if(isset($stationdata["eva"])) {
                             if(isset($stationdata["ds100"])) {
                                 // nice if pyramid completed :D
-                                var_dump($stationdata);
+                                $evanr = $stationdata['evanr'];
+                                $ds100 = $stationdata['ds100'];
+                                $name = $stationdata['name'];
+                                var_dump($name);
+                                var_dump($evanr);
                             }
                         }
                     }
