@@ -548,7 +548,9 @@ class bahnapi {
         var_dump($haltestellenname);
         $tmpname = explode(",", $haltestellenname);
         $haltestellennamefirstpart = $tmpname[0];
-        $parts = explode(" ", $haltestellennamefirstpart);
+        $tmpname2 = explode("ß", $haltestellennamefirstpart);
+        $haltestellennamefirstpart2 = $tmpname2[0];
+        $parts = explode(" ", $haltestellennamefirstpart2);
         $encparts = array();
         foreach ($parts as $part) {
             $encparts[] = urlencode($part);
