@@ -546,7 +546,9 @@ class bahnapi {
 
     public function getStationData($haltestellenname) {
         var_dump($haltestellenname);
-        $parts = explode(" ", $haltestellenname);
+        $tmpname = explode(",", $haltestellenname);
+        $haltestellennamefirstpart = $tmpname[0];
+        $parts = explode(" ", $haltestellennamefirstpart);
         $encparts = array();
         foreach ($parts as $part) {
             $encparts[] = urlencode($part);
