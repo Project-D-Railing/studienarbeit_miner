@@ -558,7 +558,7 @@ class bahnapi {
                                 // nice if pyramid completed :D
                                 $haltestellendaten = Array("NAME" => $stationdata['name'],
                                     "EVA_NR" => (int) $stationdata['eva'],
-                                    "DS100 " => $stationdata['ds100'],
+                                    "DS100" => $stationdata['ds100'],
                                     "fetchstatus2" => 0,
                                     "manualadded" => 1,
                                     "country_code" => ""
