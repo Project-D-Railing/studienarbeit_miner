@@ -62,7 +62,8 @@ while ($row = $streckenquery->fetch_assoc()) {
                 // skip fetch if we already use all of our apikeys
                 continue 2;
             }
-            echo "Missing $haltestelle <br>";
+            $haltestelleutf8 = utf8_encode($haltestelle);
+            echo "Missing $haltestelleutf8 <br>";
             $result = $bahnapi->getStationData($haltestelle);
             if($result == true) {
                 echo "Found Missing $haltestelle and added to table <br>";
