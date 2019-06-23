@@ -545,12 +545,23 @@ class bahnapi {
     }
 
     public function getStationData($haltestellenname) {
+        $namewithoutsomechars = "";
+
+        $invalidchars = array(",","ß","(");
+
+        foreach ($invalidchars as $char) {
+            $namewithoutsomechars = explode($char, $namewithoutsomechars)[0];
+        }
+
         var_dump($haltestellenname);
-        $tmpname = explode(",", $haltestellenname);
-        $haltestellennamefirstpart = $tmpname[0];
-        $tmpname2 = explode("ß", $haltestellennamefirstpart);
-        $haltestellennamefirstpart2 = $tmpname2[0];
-        $parts = explode(" ", $haltestellennamefirstpart2);
+//        $tmpname = explode(",", $haltestellenname);
+//        $haltestellennamefirstpart = $tmpname[0];
+//        $tmpname2 = explode("ß", $haltestellennamefirstpart);
+//        $haltestellennamefirstpart2 = $tmpname2[0];
+
+
+        $parts = explode(" ", $namewithoutsomechars);
+
         $encparts = array();
         foreach ($parts as $part) {
             $encparts[] = urlencode($part);
