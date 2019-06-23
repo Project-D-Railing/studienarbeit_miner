@@ -64,11 +64,11 @@ while ($row = $streckenquery->fetch_assoc()) {
             }
             $haltestelleutf8 = utf8_encode($haltestelle);
             echo "Missing $haltestelleutf8 <br>";
-            $result = $bahnapi->getStationData($haltestelle);
+            $result = $bahnapi->getStationData($haltestelleutf8);
             if($result == true) {
-                echo "Found Missing $haltestelle and added to table <br>";
+                echo "Found Missing $haltestelleutf8 and added to table <br>";
             } else {
-                echo "Didn't find missing $haltestelle was not added to table<br>";
+                echo "Didn't find missing $haltestelleutf8 was not added to table<br>";
             }
             $totalqueries++;
 
