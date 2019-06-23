@@ -545,6 +545,7 @@ class bahnapi {
     }
 
     public function getStationData($haltestellenname) {
+        var_dump($haltestellenname);
         $parts = explode(" ", $haltestellenname);
         $encparts = array();
         foreach ($parts as $part) {
