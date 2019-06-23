@@ -47,7 +47,7 @@ $row = $current_state->fetch_assoc();
 $row_id = $row['row_id'];
 $limit = 1000;
 $totalqueries = 0;
-$streckenquery = $mysqlislave->query("SELECT * FROM strecken2 ORDER BY ID ASC LIMIT $row_id, $limit");
+$streckenquery = $mysqlislave->query("SELECT * FROM strecken2 WHERE id >= $row_id ORDER BY id ASC LIMIT $limit");
 
 while ($row = $streckenquery->fetch_assoc()) {
     $haltestellen = array();
