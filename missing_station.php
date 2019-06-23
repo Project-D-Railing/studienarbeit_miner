@@ -21,7 +21,7 @@ $apikeys = SETTING_APIKEYS[$workerid];
  * 8 = 3 * 8
  * 10 = 4 * 8
  */
-$fetchcount = (int)(floor(count($apikeys) / 2) - 1) * 9;
+$fetchcount = (int)(floor(count($apikeys) / 2) - 1) * 18;
 // client time is only used to select keys so no problem with different timezones
 $minute = date("i", time());
 if ($minute % 2 == 0) {
