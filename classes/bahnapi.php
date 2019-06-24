@@ -589,8 +589,13 @@ class bahnapi {
 //        $tmpname2 = explode("ß", $haltestellennamefirstpart);
 //        $haltestellennamefirstpart2 = $tmpname2[0];
 
+        $invalidchars = array("(");
+        $namewithoutsomechars = str_replace($invalidchars, "%28", $namewithoutsomechars);
+        $invalidchars = array(")");
+        $namewithoutsomechars = str_replace($invalidchars, "%29", $namewithoutsomechars);
+
         $invalidchars = array("ß");
-        $encodedName = str_replace($invalidchars, "%3F", $encodedName);
+        $namewithoutsomechars = str_replace($invalidchars, "%3F", $namewithoutsomechars);
 
         $encodedName = urlencode(trim($namewithoutsomechars));
 //        $encodedName = urlencode($haltestellenname);
