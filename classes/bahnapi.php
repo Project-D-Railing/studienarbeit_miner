@@ -552,7 +552,7 @@ class bahnapi {
 
         $invalidchars = array(",", "ß", "(", ")","/", "ß", "�");
         $namewithoutsomechars = str_replace($invalidchars, "?", $namewithoutsomechars);
-
+        $namewithoutsomechars = str_replace("? ", "?", $namewithoutsomechars);
 //        $invalidchars = array(" ");
 //        $namewithoutsomechars = str_replace($invalidchars, "%20", $namewithoutsomechars);
 
