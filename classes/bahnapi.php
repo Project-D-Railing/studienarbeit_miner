@@ -597,7 +597,7 @@ class bahnapi {
         $namewithoutsomechars = str_replace($invalidchars, "%29", $namewithoutsomechars);
 
         $invalidchars = array("ß");
-        $namewithoutsomechars = str_replace($invalidchars, "%3F", $namewithoutsomechars);
+        $namewithoutsomechars = str_replace($invalidchars, "?", $namewithoutsomechars);
 
         $encodedName = urlencode(trim($namewithoutsomechars));
 //        $encodedName = urlencode($haltestellenname);
