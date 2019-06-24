@@ -550,20 +550,23 @@ class bahnapi {
     public function getStationData($haltestellenname) {
         $namewithoutsomechars = $haltestellenname;
 
-        $invalidchars = array(",", "ß", "(", "/", "ß", "�"," ");
+        $invalidchars = array(",", "ß", "(", ")","/", "ß", "�");
         $namewithoutsomechars = str_replace($invalidchars, "?", $namewithoutsomechars);
 
-        while (true) {
-            $tmpnameloop = $namewithoutsomechars;
+        $invalidchars = array(" ");
+        $namewithoutsomechars = str_replace($invalidchars, "%20", $namewithoutsomechars);
 
-            foreach ($invalidchars as $char) {
-                $namewithoutsomechars = explode("$char", $namewithoutsomechars)[0];
-            }
-
-            if ($tmpnameloop == $namewithoutsomechars) {
-                break;
-            }
-        }
+//        while (true) {
+//            $tmpnameloop = $namewithoutsomechars;
+//
+//            foreach ($invalidchars as $char) {
+//                $namewithoutsomechars = explode("$char", $namewithoutsomechars)[0];
+//            }
+//
+//            if ($tmpnameloop == $namewithoutsomechars) {
+//                break;
+//            }
+//        }
 
 //        var_dump($haltestellenname);
 //        $tmpname = explode(",", $haltestellenname);
