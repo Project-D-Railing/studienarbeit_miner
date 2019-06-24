@@ -553,8 +553,8 @@ class bahnapi {
         $invalidchars = array(",", "ß", "(", ")","/", "ß", "�");
         $namewithoutsomechars = str_replace($invalidchars, "?", $namewithoutsomechars);
 
-        $invalidchars = array(" ");
-        $namewithoutsomechars = str_replace($invalidchars, "%20", $namewithoutsomechars);
+//        $invalidchars = array(" ");
+//        $namewithoutsomechars = str_replace($invalidchars, "%20", $namewithoutsomechars);
 
 //        while (true) {
 //            $tmpnameloop = $namewithoutsomechars;
@@ -578,6 +578,8 @@ class bahnapi {
 
         $encodedName = urlencode(trim($namewithoutsomechars));
 //        $encodedName = urlencode($haltestellenname);
+        $invalidchars = array("+");
+        $encodedName = str_replace($invalidchars, "%20", $encodedName);
         echo "Sending request for: ".$encodedName. "<br>";
         // generate request fahrten
         $requestFahrten = 'station/' . $encodedName;
