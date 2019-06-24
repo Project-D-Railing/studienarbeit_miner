@@ -65,6 +65,9 @@ while ($row = $streckenquery->fetch_assoc()) {
     $haltestellen = explode("|", $haltestellenstring);
     foreach ($haltestellen as $haltestelle) {
         //var_dump($haltestelle);
+        if($haltestelle == "") {
+            continue 1;
+        }
         if (!in_array($haltestelle, $stationen)) {
             if($totalqueries >= $fetchcount) {
                 // skip fetch if we already use all of our apikeys
