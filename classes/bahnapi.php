@@ -589,13 +589,13 @@ class bahnapi {
 //        $tmpname2 = explode("ß", $haltestellennamefirstpart);
 //        $haltestellennamefirstpart2 = $tmpname2[0];
 
+        $invalidchars = array("ß");
+        $encodedName = str_replace($invalidchars, "%3F", $encodedName);
 
         $encodedName = urlencode(trim($namewithoutsomechars));
 //        $encodedName = urlencode($haltestellenname);
         $invalidchars = array("%");
         $encodedName = str_replace($invalidchars, "%25", $encodedName);
-        $invalidchars = array("ß");
-        $encodedName = str_replace($invalidchars, "%3F", $encodedName);
         $invalidchars = array("+");
         $encodedName = str_replace($invalidchars, "%20", $encodedName);
         echo "Sending request for: ".$encodedName. "<br>";
