@@ -599,8 +599,8 @@ class bahnapi {
 
         $encodedName = urlencode(trim($namewithoutsomechars));
 //        $encodedName = urlencode($haltestellenname);
-        $invalidchars = array("%");
-        $encodedName = str_replace($invalidchars, "%25", $encodedName);
+        $invalidchars = array("%C3");
+        $encodedName = str_replace($invalidchars, "%25C3", $encodedName);
         $invalidchars = array("+");
         $encodedName = str_replace($invalidchars, "%20", $encodedName);
         echo "Sending request for: ".$encodedName. "<br>";
