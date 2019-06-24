@@ -565,7 +565,7 @@ class bahnapi {
 
         $namewithoutsomechars = $haltestellenname;
 
-        $invalidchars = array("/", "�");
+        $invalidchars = array("�");
         $namewithoutsomechars = str_replace($invalidchars, "?", $namewithoutsomechars);
 //        $namewithoutsomechars = str_replace("? ", "?", $namewithoutsomechars);
 //        $invalidchars = array(" ");
@@ -589,6 +589,8 @@ class bahnapi {
 //        $tmpname2 = explode("ß", $haltestellennamefirstpart);
 //        $haltestellennamefirstpart2 = $tmpname2[0];
 
+        $invalidchars = array("/");
+        $namewithoutsomechars = str_replace($invalidchars, "%2F", $namewithoutsomechars);
         $invalidchars = array("(");
         $namewithoutsomechars = str_replace($invalidchars, "%28", $namewithoutsomechars);
         $invalidchars = array(")");
