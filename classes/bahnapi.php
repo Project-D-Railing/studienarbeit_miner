@@ -548,11 +548,26 @@ class bahnapi {
     }
 
     public function getStationData($haltestellenname) {
+
+        // what works currently
+
+        // Groningen Europapark     Groningen%20Europapark
+        // Varnsdorf mlékárna       Varnsdorf%20ml%25C3%25A9k%25C3%25A1rna
+        // Hainewalde Berghäuser    Hainewalde%20Bergh%25C3%25A4user
+        // Prösen Ost B101          Pr%25C3%25B6sen%20Ost%20B101
+        // Teisnach Rohde+Schwarz   Teisnach%20Rohde%252BSchwarz
+        // Buschmühle               Buschm%25C3%25BChle
+        // Ulberndorf               Ulberndorf
+        // Hojsova Straz-Brcalnik   Hojsova%20Straz-Brcalnik
+
+
+
+
         $namewithoutsomechars = $haltestellenname;
 
         $invalidchars = array(",", "ß", "(", ")","/", "ß", "�");
         $namewithoutsomechars = str_replace($invalidchars, "?", $namewithoutsomechars);
-        $namewithoutsomechars = str_replace("? ", "?", $namewithoutsomechars);
+//        $namewithoutsomechars = str_replace("? ", "?", $namewithoutsomechars);
 //        $invalidchars = array(" ");
 //        $namewithoutsomechars = str_replace($invalidchars, "%20", $namewithoutsomechars);
 
@@ -573,7 +588,6 @@ class bahnapi {
 //        $haltestellennamefirstpart = $tmpname[0];
 //        $tmpname2 = explode("ß", $haltestellennamefirstpart);
 //        $haltestellennamefirstpart2 = $tmpname2[0];
-
 
 
         $encodedName = urlencode(trim($namewithoutsomechars));
