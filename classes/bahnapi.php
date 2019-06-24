@@ -572,13 +572,8 @@ class bahnapi {
 //        $haltestellennamefirstpart2 = $tmpname2[0];
 
 
-        $parts = explode(" ", trim($namewithoutsomechars));
 
-        $encparts = array();
-        foreach ($parts as $part) {
-            $encparts[] = urlencode($part);
-        }
-        $encodedName = implode(" ", $encparts);
+        $encodedName = urlencode(trim($namewithoutsomechars));
 //        $encodedName = urlencode($haltestellenname);
         echo "Sending request for: ".$encodedName. "<br>";
         // generate request fahrten
