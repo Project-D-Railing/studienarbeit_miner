@@ -596,8 +596,6 @@ class bahnapi {
         $invalidchars = array(")");
         $namewithoutsomechars = str_replace($invalidchars, "%29", $namewithoutsomechars);
 
-        // Werderstra%3Fe%252C%2520Karlsruhe
-        // Werderstra%253Fe%252C%20Karlsruhe
         $invalidchars = array("ß");
         $namewithoutsomechars = str_replace($invalidchars, "%3F", $namewithoutsomechars);
 
@@ -607,6 +605,8 @@ class bahnapi {
         $encodedName = str_replace($invalidchars, "%25", $encodedName);
         $invalidchars = array("%2525");
         $encodedName = str_replace($invalidchars, "%25", $encodedName);
+        $invalidchars = array("%253F");
+        $encodedName = str_replace($invalidchars, "%3F", $encodedName);
         $invalidchars = array("+");
         $encodedName = str_replace($invalidchars, "%20", $encodedName);
         echo "Sending request for: ".$encodedName. "<br>";
