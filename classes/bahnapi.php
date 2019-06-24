@@ -596,8 +596,10 @@ class bahnapi {
         $invalidchars = array(")");
         $namewithoutsomechars = str_replace($invalidchars, "%29", $namewithoutsomechars);
 
+        // Werderstra%3Fe%252C%2520Karlsruhe
+        // Werderstra%253Fe%252C%20Karlsruhe
         $invalidchars = array("ß");
-        $namewithoutsomechars = str_replace($invalidchars, "?", $namewithoutsomechars);
+        $namewithoutsomechars = str_replace($invalidchars, "%3F", $namewithoutsomechars);
 
         $encodedName = urlencode(trim($namewithoutsomechars));
 //        $encodedName = urlencode($haltestellenname);
