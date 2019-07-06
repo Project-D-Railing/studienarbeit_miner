@@ -18,6 +18,16 @@ class bahnapi {
     //PLEASE NOTE THIS WILL CREATE AN MEMORY OVERFLOW IF TOO MUCH QUERIES ARE DONE WITH THE SAME OBJECT INSTANCE
     public $calllog = array();
     private $database;
+    // LogLevel meanings:
+    /**
+     * 1 = debug
+     * 2 = info
+     * 3 = baseinfo
+     * 4 = warn
+     * 5 = error
+     * 6 = fatal
+     */
+    private $logLevel = 3;
 
     /**
      * constructor of bahnapi
@@ -75,7 +85,7 @@ class bahnapi {
         }
 
         // no free key found do some logging maybe
-        $this->logErrorToErrorlog("CRITICAL: No free apikey found for: $api", 100);
+        $this->logErrorToErrorlog("CRITICAL: No free apikey found for: $api", 100, 5);
 //        $this->errors[] = time() . " CRITICAL: No free apikey found for: " . $api;
         return FALSE;
     }
@@ -132,7 +142,7 @@ class bahnapi {
         if (curl_errno($ch)) {
 //            trigger_error('Fehler:' . curl_error($ch));
             $errormessage = curl_error($ch);
-            $this->logErrorToErrorlog("CURL Fehler: " . $errormessage, 100);
+            $this->logErrorToErrorlog("CURL Fehler: " . $errormessage, 100,5);
 //            $this->errors[] = time() . " CURL Fehler: $errormessage";
             return false;
         }
@@ -144,7 +154,7 @@ class bahnapi {
         // First level detection, dont update haltestelle here
         if ($http_code == 429 || $result == '{"error":{"code":900800,"message":"You have exceeded your quota","description":"Message throttled out"}}') {
             // API quota warning
-            $this->logErrorToErrorlog("API Quota Warning for: " . $api . " APIKEY: " . $this->apikeycurrent, 100);
+            $this->logErrorToErrorlog("API Quota Warning for: " . $api . " APIKEY: " . $this->apikeycurrent, 100,4);
 //            $this->errors[] = time() . " API Quota Warning for: " . $api . " APIKEY: " . $this->apikeycurrent;
             $value = $this->getNextAPIKey($api);
             if ($value == FALSE) {
@@ -169,14 +179,14 @@ class bahnapi {
             if ($this->database->update('haltestellen2', $datahaltestellen)) {
                 // echo $this->database->count . ' records were updated';
             } else {
-                $this->logErrorToErrorlog("update of haltestellen2 failed: " . $this->database->getLastError(), 100);
+                $this->logErrorToErrorlog("update of haltestellen2 failed: " . $this->database->getLastError(), 100,5);
 //                $this->errors[] = time() . ' update of haltestellen2 failed: ' . $this->database->getLastError();
             }
             return "error400";
         }
         // 400 syntax incorrect, 401 unautorized,  404 happens if too far in history, 410 happens if too far in future, 429 rate limiting see above
         if ($http_code !== 200) {
-            $this->logErrorToErrorlog("ERROR: The API returned Code: " . $http_code, 100);
+            $this->logErrorToErrorlog("ERROR: The API returned Code: " . $http_code, 100,4);
 //            $this->errors[] = time() . " ERROR: The API returned Code: " . $http_code;
 
             $datahaltestellen = array('fetchtime' => $this->database->now(),
@@ -185,7 +195,7 @@ class bahnapi {
             if ($this->database->update('haltestellen2', $datahaltestellen)) {
                 echo $this->database->count . ' records were updated';
             } else {
-                $this->logErrorToErrorlog("update of haltestellen2 failed: " . $this->database->getLastError(), 100);
+                $this->logErrorToErrorlog("update of haltestellen2 failed: " . $this->database->getLastError(), 100,5);
 //                $this->errors[] = time() . ' update of haltestellen2 failed: ' . $this->database->getLastError();
             }
             return FALSE;
@@ -435,7 +445,7 @@ class bahnapi {
                     if ($pos === false) {
                         // not a duplicate error of db
                         $counterrors++;
-                        $this->logErrorToErrorlog("Insert of one zug failed:: " . $this->database->getLastError(), 100);
+                        $this->logErrorToErrorlog("Insert of one zug failed:: " . $this->database->getLastError(), 100,5);
 //                        $this->errors[] = time() . "Insert of one zug failed: " . $this->database->getLastError();
                     }
                 }
@@ -446,7 +456,7 @@ class bahnapi {
                 if ($pos === false) {
                     // not a duplicate error of db
                     $counterrors++;
-                    $this->logErrorToErrorlog("Insert of one zug failed:: " . $this->database->getLastError(), 100);
+                    $this->logErrorToErrorlog("Insert of one zug failed:: " . $this->database->getLastError(), 100,5);
 //                    $this->errors[] = time() . "Insert of one zug failed: " . $this->database->getLastError();
                 }
             }
@@ -462,7 +472,7 @@ class bahnapi {
         $this->database->where('EVA_NR', $stationsevanr);
         $haltestellenresult = $this->database->update('haltestellen2', $datahaltestellen);
         if (!$haltestellenresult) {
-            $this->logErrorToErrorlog("update of haltestellen2 failed: " . $this->database->getLastError(), 100);
+            $this->logErrorToErrorlog("update of haltestellen2 failed: " . $this->database->getLastError(), 100,5);
 //            $this->errors[] = time() . ' update of haltestellen2 failed: ' . $this->database->getLastError();
         } else {
 //            $this->errors[] = time() . ' update of haltestellen2 : '.  $this->database->count . ' records were updated';
@@ -492,7 +502,7 @@ class bahnapi {
 //        $this->errors[] = time() . " BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB ";
         // lookup errors
         if ($fahrten == FALSE) {
-            $this->logErrorToErrorlog("Error getting Fahrten skipping next request: " . $stationID . '/' . $date . '/' . $hour, $stationID);
+            $this->logErrorToErrorlog("Error getting Fahrten skipping next request: " . $stationID . '/' . $date . '/' . $hour, $stationID, 4);
 //            $this->errors[] = time() . " Error getting Fahrten skipping next request. " . $stationID . '/' . $date . '/' . $hour;
             return FALSE;
         }
@@ -508,7 +518,7 @@ class bahnapi {
             if ($this->database->update('haltestellen2', $datahaltestellen)) {
 //                echo $this->database->count . ' records were updated';
             } else {
-                $this->logErrorToErrorlog("Update of haltestellen2 failed: " . $this->database->getLastError(), $stationID);
+                $this->logErrorToErrorlog("Update of haltestellen2 failed: " . $this->database->getLastError(), $stationID,5);
 
 //                $this->errors[] = time() . ' update of haltestellen2 failed: ' . $this->database->getLastError();
             }
@@ -519,7 +529,7 @@ class bahnapi {
         $requestAbweichung = "fchg/" . $stationID;
         $abweichungen = $this->bahnCurl($requestAbweichung, "timetables");
         if ($abweichungen == FALSE) {
-            $this->logErrorToErrorlog("Error getting Abweichungen returning now ", $stationID);
+            $this->logErrorToErrorlog("Error getting Abweichungen returning now ", $stationID, 4);
 //            $this->errors[] = time() . " Error getting Abweichungen returning now. " . $stationID;
             return FALSE;
         }
@@ -542,9 +552,11 @@ class bahnapi {
         return date_timestamp_get($date);
     }
 
-    public function logErrorToErrorlog($errorstring, $evanr = 100) {
-        $errordata = array("log" => $errorstring, "evanr" => $evanr);
-        $this->database->insert("errorlog2", $errordata);
+    public function logErrorToErrorlog($errorstring,$evanr = 100, $loglevel=1) {
+        $errordata = array("log" => $errorstring, "evanr" => $evanr, "loglevel" => $loglevel);
+        if($loglevel >= $this->logLevel) {
+            $this->database->insert("errorlog2", $errordata);
+        }
     }
 
     public function getStationData($haltestellenname) {

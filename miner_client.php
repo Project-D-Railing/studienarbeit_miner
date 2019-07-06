@@ -63,8 +63,7 @@ while ($row = $stationsquery->fetch_assoc()) {
 
 if ($mysqlislave->query("COMMIT;") === false) {
     $mysqlierror = $mysqlislave->error;
-    $errordata = array("log" => "Error commiting result: $mysqlierror", "evanr" => 100);
-    $db->insert("errorlog2", $errordata);
+    $bahnapi->logErrorToErrorlog("Error commiting result: $mysqlierror", 100, 4);
 
     $mysqlislave->query("ROLLBACK;");
 
@@ -73,8 +72,8 @@ if ($mysqlislave->query("COMMIT;") === false) {
 
 $timestamp = time();
 $realcount = count($stationen);
-$errordata = array("log" => "Start fetching $realcount stations from $currenthost with $workerid my current time is $timestamp", "evanr" => 100);
-$db->insert("errorlog2", $errordata);
+$bahnapi->logErrorToErrorlog("Start fetching $realcount stations from $currenthost with $workerid my current time is $timestamp", 100, 3);
+
 
 //$bahnapi->addToErrorLog("Anz. Fetch: " . count($stationen));
 // wait between 1 and 10 seconds before using api
@@ -92,15 +91,11 @@ foreach ($stationen as $key => $station) {
     $resetresult = $mysqlislave->query("UPDATE haltestellen2 SET fetchstatus = 1 WHERE EVA_NR = '$evanr'");
     if($resetresult === false) {
         $mysqlierror = $mysqlislave->error;
-        $errordata = array("log" => "Error resetting station $evanr workerid $workerid with error: $mysqlierror", "evanr" => 100);
-        $db->insert("errorlog2", $errordata);
+        $bahnapi->logErrorToErrorlog("Error resetting station $evanr workerid $workerid with error: $mysqlierror", 100, 5);
     }
     $totaltime = round(((microtime(true) - $starttime)), 2);
-    $errordata = array("log" => "Done in $totaltime seconds $currenthost workerid $workerid", "evanr" => $evanr);
-    $db->insert("errorlog2", $errordata);
+    $bahnapi->logErrorToErrorlog("Done in $totaltime seconds $currenthost workerid $workerid", $evanr, 2);
     usleep(mt_rand(200000, 1500000));
 }
-
-$errordata = array("log" => "Finished fetching $realcount stations from $currenthost with $workerid", "evanr" => 100);
-$db->insert("errorlog2", $errordata);
+$bahnapi->logErrorToErrorlog("Finished fetching $realcount stations from $currenthost with $workerid", 100, 3);
 
